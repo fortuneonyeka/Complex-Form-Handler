@@ -11,14 +11,7 @@ const Form = () => {
   const [passwordError, setPasswordError] = useState('')
 
 
-  const validatePassword = (password) => {
-      const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
-      if (!regex.test(password)) {
-        setPasswordError('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
-      } else {
-        setPasswordError('')
-      }
-    }
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
