@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { faCheck,faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Form = () => {
   const initialState = {
@@ -8,32 +10,38 @@ const Form = () => {
     address: "",
   };
   const [details, setDetails] = useState(initialState);
-  const [passwordError, setPasswordError] = useState('')
+  // const [passwordError, setPasswordError] = useState('')
 
 
-  const validatePassword = (password) => {
-      const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
-      if (!regex.test(password)) {
-        setPasswordError('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
-      } else {
-        setPasswordError('')
-      }
-    }
+  // const validatePassword = (password) => {
+  //     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
+  //     if (!regex.test(password)) {
+  //       setPasswordError('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
+  //     } else {
+  //       setPasswordError('')
+  //     }
+  //   }
+
+  // must start with lower or uppercase letter, must be anywhere from 4-23 characters, lower or uppercase,digits,hifins or underscores,
+  const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+
+  // At least one lower case, one uppercase letter, one digit and one special character and must be 8-24 chracters
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setDetails({ ...details, [name]: value });
-    if (name === 'password') {
-      validatePassword(value)
-    }
+    // if (name === 'password') {
+    //   validatePassword(value)
+    // }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (passwordError) {
-      alert('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
-      return
-    }
+    // if (passwordError) {
+    //   alert('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
+    //   return
+    // }
     const maskedDetails = {
       ...details,
       password: "*".repeat(details.password.length),
@@ -41,7 +49,7 @@ const Form = () => {
     console.log(maskedDetails);
 
     setDetails(initialState);
-    setPasswordError('')
+    // setPasswordError('')
   };
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-teal-100">
@@ -103,31 +111,37 @@ const Form = () => {
               className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
             />
           </div>
-
-          <div className="mb-6">
+          <div className="mb-4">
             <label
-              htmlFor="address"
+              htmlFor="password"
               className="block text-sm sm:text-base font-medium mb-1 text-teal-800"
             >
-              Address:
+              Confirm Password:
             </label>
-            <textarea
-              id="address"
-              name="address"
+            <input
+              id="password"
+              name="password"
               required
-              value={details.address}
+              value={details.password}
               onChange={handleInputChange}
-              rows="4"
+              type="password"
               className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
-            ></textarea>
+            />
           </div>
+
+        
 
           <button
             type="submit"
-            className="w-full bg-teal-600 text-white py-2 px-4 rounded-md text-sm sm:text-base hover:bg-teal-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 shadow-md hover:shadow-lg"
+            className="w-full bg-teal-600 text-white py-2 px-4 rounded-md text-sm sm:text-base hover:bg-teal-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 shadow-md hover:shadow-lg mb-4"
           >
             Register
           </button>
+
+          <div className="">
+            <p>Already registered?</p>
+            <a href="">Login</a>
+          </div>
         </form>
       </fieldset>
     </div>
