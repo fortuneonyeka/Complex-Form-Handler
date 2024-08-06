@@ -13,7 +13,20 @@ const Form = () => {
   //   address: "",
   // };
   const [userDetails, setUserDetails] = useState("");
-  
+  const [user, setUser] = useState("")
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
+
+  const [pwd, setPwd] = useState("");
+  const [pwdFocus, setPwdFocus] = useState(false);
+  const [validPwd, setValidPwd] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false)
+
+  const[errMsg, setErrMsg] = useState("")
+  const [success, setSuccess] = useState(false)
 
   // useEffect(() => {
   //   userRef.current.focus()
