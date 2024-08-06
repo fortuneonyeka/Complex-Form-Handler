@@ -28,32 +28,32 @@ const Form = () => {
   const[errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
 
-  // useEffect(() => {
-  //   userRef.current.focus()
-  // },[])
+  useEffect(() => {
+    userRef.current.focus()
+  },[])
   
 
-  // useEffect(() => {
-  //   const result = USER_REGEX.test(user)
-  //   console.log(result);
-  //   console.log(user);
-  //   setValidName(result)
-  // },[user])
+  useEffect(() => {
+    const result = USER_REGEX.test(user)
+    console.log(result);
+    console.log(user);
+    setValidName(result)
+  },[user])
   
 
-  // useEffect(() => {
-  //   const result = PWD_REGEX.test(pwd)
-  //   console.log(result);
-  //   console.log(pwd);
+  useEffect(() => {
+    const result = PWD_REGEX.test(pwd)
+    console.log(result);
+    console.log(pwd);
 
-  //   const passwordMatch = pwd === matchPwd
-  //   setValidMatch(passwordMatch)
-  // },[pwd, matchPwd])
+    const passwordMatch = pwd === matchPwd
+    setValidMatch(passwordMatch)
+  },[pwd, matchPwd])
 
 
-  // useEffect(() => {
-  //   setErrMsg("")
-  // },[user, pwd, matchPwd])
+  useEffect(() => {
+    setErrMsg("")
+  },[user, pwd, matchPwd])
   
  
 
