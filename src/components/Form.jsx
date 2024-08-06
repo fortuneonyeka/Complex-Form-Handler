@@ -3,24 +3,46 @@ import { faCheck,faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Form = () => {
-  const initialState = {
-    name: "",
-    email: "",
-    password: "",
-    address: "",
-  };
-  const [details, setDetails] = useState(initialState);
-  // const [passwordError, setPasswordError] = useState('')
+  const userRef = useRef();
+  const errRef = useRef();
+
+  // const initialState = {
+  //   name: "",
+  //   email: "",
+  //   password: "",
+  //   address: "",
+  // };
+  const [userDetails, setUserDetails] = useState("");
+  
+
+  // useEffect(() => {
+  //   userRef.current.focus()
+  // },[])
+  
+
+  // useEffect(() => {
+  //   const result = USER_REGEX.test(user)
+  //   console.log(result);
+  //   console.log(user);
+  //   setValidName(result)
+  // },[user])
+  
+
+  // useEffect(() => {
+  //   const result = PWD_REGEX.test(pwd)
+  //   console.log(result);
+  //   console.log(pwd);
+
+  //   const passwordMatch = pwd === matchPwd
+  //   setValidMatch(passwordMatch)
+  // },[pwd, matchPwd])
 
 
-  // const validatePassword = (password) => {
-  //     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
-  //     if (!regex.test(password)) {
-  //       setPasswordError('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
-  //     } else {
-  //       setPasswordError('')
-  //     }
-  //   }
+  // useEffect(() => {
+  //   setErrMsg("")
+  // },[user, pwd, matchPwd])
+  
+ 
 
   // must start with lower or uppercase letter, must be anywhere from 4-23 characters, lower or uppercase,digits,hifins or underscores,
   const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -30,30 +52,28 @@ const Form = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setDetails({ ...details, [name]: value });
-    // if (name === 'password') {
-    //   validatePassword(value)
-    // }
+    setUserDetails({ ...userDetails, [name]: value });
+    
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (passwordError) {
-    //   alert('Password must be a minimum of 6 characters wit at least one capital letter, one number, and one special character.')
-    //   return
-    // }
     const maskedDetails = {
-      ...details,
-      password: "*".repeat(details.password.length),
+      ...userDetails,
+      password: "*".repeat(userDetails.password.length),
     };
     console.log(maskedDetails);
 
-    setDetails(initialState);
+    setDetails("");
     // setPasswordError('')
   };
+
+  
   return (
-    <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-teal-100">
-      <fieldset className="border-4 border-teal-500 p-6 sm:p-8 md:p-12 rounded-lg w-full max-w-md relative bg-white shadow-lg">
+    <section className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-teal-100">
+<p ref={errRef} className={`${errMsg ? 'text-red-600 bg-red-100 p-2 rounded' : 'sr-only'}`}aria-live="assertive">
+  {errMsg}</p>      
+  <fieldset className="border-4 border-teal-500 p-6 sm:p-8 md:p-12 rounded-lg w-full max-w-md relative bg-white shadow-lg">
         <legend className="text-xl sm:text-2xl font-bold text-teal-700 px-4">
           User Registration
         </legend>
@@ -66,10 +86,16 @@ const Form = () => {
               Name:
             </label>
             <input
+            ref={userRef}
+            autoComplete="off"
+            aria-invalid={validName ? "false" : "true"}
+            aria-describedby="uidnote"
+            onFocus={() => setUserFocus(true)}
+            onBlur={() => setUserFocus(false)}
               id="name"
               required
               name="name"
-              value={details.name}
+              value={userDetails.name}
               onChange={handleInputChange}
               type="text"
               className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
@@ -84,10 +110,15 @@ const Form = () => {
               Email:
             </label>
             <input
+            ref={userRef}
+            autoComplete="off"
+            // aria-invalid={validName ? "false" : "true"}
+            aria-describedby="uidnote"
+            // onFocus={() => setPwdFocus()}
               id="email"
               required
               name="email"
-              value={details.email}
+              value={userDetails.email}
               onChange={handleInputChange}
               type="email"
               className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
@@ -102,10 +133,15 @@ const Form = () => {
               Password:
             </label>
             <input
+            ref={userRef}
+            autoComplete="off"
+            aria-invalid={validPwd ? "false" : "true"}
+            aria-describedby="uidnote"
+            onFocus={() => setPwdFocus()}
               id="password"
               name="password"
               required
-              value={details.password}
+              // value={userDetails.password}
               onChange={handleInputChange}
               type="password"
               className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
@@ -119,10 +155,15 @@ const Form = () => {
               Confirm Password:
             </label>
             <input
+            ref={userRef}
+            autoComplete="off"
+            aria-invalid={validPwd ? "false" : "true"}
+            aria-describedby="uidnote"
+            onFocus={() => setPwdFocus()}
               id="password"
               name="password"
               required
-              value={details.password}
+              // value={userDetails.password}
               onChange={handleInputChange}
               type="password"
               className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
@@ -144,7 +185,7 @@ const Form = () => {
           </div>
         </form>
       </fieldset>
-    </div>
+    </section>
   );
 };
 
