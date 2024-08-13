@@ -5,7 +5,19 @@ const Form = () => {
 
   const [details, setDetails] = useState(initialState);
 
-  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // handle form submission
+    console.log("Form submitted:", details);
+    setDetails(initialState)
+  };
+
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const newDetails = [...details];
+    newDetails[index][name] = value;
+    setDetails(newDetails);
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-teal-100">
