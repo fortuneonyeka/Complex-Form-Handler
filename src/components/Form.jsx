@@ -23,6 +23,11 @@ const Form = () => {
     setDetails([...details, { firstName: "", email: "", address: "" }]);
   };
 
+  const removeField = (index) => {
+    const newDetails = details.filter((_, i) => i !== index);
+    setDetails(newDetails);
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-teal-100">
       <fieldset className="border-4 border-teal-500 p-6 sm:p-8 md:p-12 rounded-lg w-full max-w-md relative bg-white shadow-lg">
