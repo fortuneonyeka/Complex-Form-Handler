@@ -1,58 +1,63 @@
 import React, { useState } from "react";
+import { MdOutlineAddToPhotos } from "react-icons/md";
+import { CgPlayListRemove } from "react-icons/cg";
 
 const Form = () => {
   const initialState = [{ firstName: "", email: "", address: "" }];
 
-  const [details, setDetails] = useState(initialState);
+  const [userDetails, setUserDetails] = useState(initialState);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle form submission
-    console.log("Form submitted:", details);
-    setDetails(initialState)
+    const message = userDetails.length > 1 ? `${userDetails.length} Users registered`: `${userDetails.length} User registered`
+    console.log(message, userDetails);
+    setUserDetails(initialState)
   };
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    const newDetails = [...details];
-    newDetails[index][name] = value;
-    setDetails(newDetails);
+    const newUserDetails = [...userDetails];
+    newUserDetails[index][name] = value;
+    setUserDetails(newUserDetails);
   };
 
   const addField = () => {
-    setDetails([...details, { firstName: "", email: "", address: "" }]);
+    setUserDetails([...userDetails, { firstName: "", email: "", address: "" }]);
   };
 
   const removeField = (index) => {
-    const newDetails = details.filter((_, i) => i !== index);
-    setDetails(newDetails);
+    const newUserDetails = userDetails.filter((_, i) => i !== index);
+    setUserDetails(newUserDetails);
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-teal-100">
       <fieldset className="border-4 border-teal-500 p-6 sm:p-8 md:p-12 rounded-lg w-full max-w-md relative bg-white shadow-lg">
         <legend className="text-xl sm:text-2xl font-bold text-teal-700 px-4">
-          User Registration
+          {userDetails.length > 1? "Users Registration": "User Registration"}
         </legend>
         <form onSubmit={handleSubmit}>
-          {details.map((detail, index) => (
+          {userDetails.map((detail, index) => (
             <div key={index} className="mb-4">
-              {Object.keys(detail).map((key) => (
-                <div key={key} className="mb-2">
+              {Object.keys(detail).map((name) => (
+                <div key={name} className="mb-2">
                   <label
-                    htmlFor={`${key}-${index}`}
+                    htmlFor={`${name}-${index}`}
                     className="block text-sm sm:text-base font-medium text-teal-800"
                   >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}:
+                    {name.charAt(0).toUpperCase() + name.slice(1)}:
                   </label>
-                  {key === "address" ? (
-                    <textarea name={key} id={`${key}-${index}`} value={detail[key]} cols="10" rows="3" onChange={(e) => handleInputChange(e, index)} className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"/>
+                  {name === "address" ? (
+                    <textarea name={name} id={`${name}-${index}`} value={detail[name]} placeholder={name} cols="10" rows="3" onChange={(e) => handleInputChange(e, index)} className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"/>
                   ): (
                     <input
-                    id={`${key}-${index}`}
-                    type={key === "email" ? "email": "text"}
-                    name={key}
-                    value={detail[key]}
+                    id={`${name}-${index}`}
+                    type={name === "email" ? "email": "text"}
+                    required = {name === "email"}
+                    name={name}
+                    value={detail[name]}
+                    placeholder={name}
                     onChange={(e) => handleInputChange(e, index)}
                     className="w-full py-2 px-3 rounded-md text-sm sm:text-base border-2 border-teal-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
                   />
@@ -66,15 +71,15 @@ const Form = () => {
                   onClick={addField}
                   className="text-green-500"
                 >
-                  +
+                 <MdOutlineAddToPhotos />
                 </button>
-                {details.length > 1 && (
+                {userDetails.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removeField(index)}
                     className="text-red-500"
                   >
-                    x
+                   <CgPlayListRemove />
                   </button>
                 )}
               </div>
@@ -84,7 +89,7 @@ const Form = () => {
             type="submit"
             className="w-full bg-teal-600 text-white py-2 px-4 rounded-md text-sm sm:text-base hover:bg-teal-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 shadow-md hover:shadow-lg"
           >
-            Register
+            {userDetails.length > 1 ? "Add Users" : "Add User"}
           </button>
         </form>
       </fieldset>
