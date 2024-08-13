@@ -39,7 +39,24 @@ const Form = () => {
                   
                 </div>
               ))}
-              
+              <div className="flex gap-6 cursor-pointer text-xl">
+                <button
+                  type="button"
+                  onClick={addField}
+                  className="text-green-500"
+                >
+                  +
+                </button>
+                {details.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeField(index)}
+                    className="text-red-500"
+                  >
+                    x
+                  </button>
+                )}
+              </div>
             </div>
           ))}
           <button
